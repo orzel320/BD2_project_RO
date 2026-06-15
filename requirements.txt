@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+neo4j
+pydantic
+radioactivedecay
+sphinx
+sphinx-js
+sphinxcontrib-mermaid
+furo
+myst-parser

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Szczegóły Izotopu</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body class="dashboard-body">
+    
+    <header class="dashboard-header">
+        <button onclick="window.location.href='index.html'" class="back-btn">← Wróć do Diagramu Segrè</button>
+        <h1 id="dashboard-title">Ładowanie danych...</h1>
+    </header>
+
+    <main class="dashboard-grid">
+        
+        <div class="card">
+            <h3>Właściwości fizyczne</h3>
+            <ul id="properties-list">
+                <li><strong>Nazwa pierwiastka:</strong> <span id="det-element">-</span></li>
+                <li><strong>Liczba Atomowa (Z):</strong> <span id="det-z">-</span></li>
+                <li><strong>Liczba Masowa (A):</strong> <span id="det-a">-</span></li>
+                <li><strong>Czas półtrwania:</strong> <span id="det-hl">-</span></li>
+                <li><strong>Szansa na rozszczepienie (SF):</strong> <span id="det-sf">-</span></li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Prawdopodobieństwo dróg rozpadu</h3>
+            <div id="decay-chart-container" style="flex-grow: 1; position: relative;">
+                <svg id="decay-chart" style="width: 100%; height: 100%; min-height: 200px;"></svg>
+            </div>
+        </div>
+
+        <div class="card cy-card">
+            <h3>Drzewo rozpadu (Topologia)</h3>
+            <div id="cy-container"></div>
+        </div>
+
+        <div class="card">
+            <h3>Filtry wizualne grafu</h3>
+            <div id="filters-container" style="display: flex; flex-direction: column; gap: 10px; font-size: 1.1rem; margin-top: 10px;">
+                <label>
+                    <input type="checkbox" id="filter-alpha" checked> 
+                    Rozpad Alfa (α)
+                </label>
+                <label>
+                    <input type="checkbox" id="filter-beta-minus" checked> 
+                    Rozpad Beta- (β⁻)
+                </label>
+                <label>
+                    <input type="checkbox" id="filter-beta-plus" checked> 
+                    Rozpad Beta+ / Wychwyt elektronu (ε)
+                </label>
+            </div>
+        </div>
+
+        <div class="card" style="grid-column: span 2;">
+            <h3>Widmo Emisyjne (α i γ)</h3>
+            <div id="spectrum-chart-container" style="width: 100%; height: 250px; position: relative;">
+                <svg id="spectrum-chart" style="width: 100%; height: 100%;"></svg>
+            </div>
+        </div>
+
+        <div class="card" style="grid-column: span 2;"> <h3>Ewolucja łańcucha rozpadu (Równania Batemana)</h3>
+            <div id="evolution-chart-container" style="width: 100%; height: 350px; position: relative;">
+                <svg id="evolution-chart" style="width: 100%; height: 100%;"></svg>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="details.js"></script>
+</body>
+</html>

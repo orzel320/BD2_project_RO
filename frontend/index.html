@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radioaktywność - Diagram Segrè</title>
+    <link rel="stylesheet" href="style.css?v=2">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <div id="app-container">
+        <div id="controls-panel">
+            <h3>Nawigacja Energetyczna</h3>
+            
+            <div class="slider-container">
+                <label for="isomer-slider">Poziom wzbudzenia (Izomery):</label>
+                <input type="range" id="isomer-slider" min="0" max="2" value="0" step="1">
+                <p>Stan: <strong id="isomer-label">Podstawowy (0)</strong></p>
+            </div>
+
+            <div class="legend-container">
+                <p style="margin-bottom: 5px;"><strong>Czas półtrwania:</strong></p>
+                <div class="color-bar"></div>
+                <div class="legend-labels">
+                    <span>μs</span>
+                    <span>sek</span>
+                    <span>dni</span>
+                    <span>lata</span>
+                    <span>Stabilny</span>
+                </div>
+            </div>
+        </div>
+
+        <main id="chart-container">
+            <svg id="segre-chart"></svg>
+        </main>
+
+        <aside id="details-panel" class="hidden">
+            <button id="close-panel-btn">✖ Zamknij</button>
+            <h2 id="iso-name">Wybierz izotop</h2>
+            
+            <div class="info-section">
+                <p><strong>Pierwiastek:</strong> <span id="iso-element">-</span></p>
+                <p><strong>Liczba protonów (Z):</strong> <span id="iso-z">-</span></p>
+                <p><strong>Liczba neutronów (N):</strong> <span id="iso-n">-</span></p>
+                <p><strong>Czas półtrwania:</strong> <span id="iso-hl">-</span></p>
+            </div>
+            
+            <button id="explore-btn" class="primary-btn">Szczegóły</button>
+        </aside>
+    </div>
+
+    <div id="tooltip" class="hidden"></div>
+
+    <script src="app.js?v=2"></script>
+</body>
+</html>
