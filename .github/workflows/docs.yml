@@ -1,0 +1,45 @@
+name: Deploy Sphinx Documentation
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pobranie repozytorium
+        uses: actions/checkout@v4
+
+      - name: Konfiguracja Node.js (dla JSDoc)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalacja globalna jsdoc
+        run: npm install -g jsdoc
+
+      - name: Konfiguracja Pythona
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalacja zależności (Sphinx i reszta)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Budowanie dokumentacji Sphinx do HTML
+        run: |
+          cd docs
+          make html
+
+      - name: Publikacja na GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/_build/html
