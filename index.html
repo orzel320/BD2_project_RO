@@ -228,13 +228,295 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="atlas-izotopow-documentation">
-<h1>Atlas Izotopów documentation<a class="headerlink" href="#atlas-izotopow-documentation" title="Link to this heading">¶</a></h1>
-<p>Add your content using <code class="docutils literal notranslate"><span class="pre">reStructuredText</span></code> syntax. See the
-<a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html">reStructuredText</a>
-documentation for details.</p>
+          <section id="dokumentacja-projektu-radioaktywnosc-baza-grafowa">
+<h1>Dokumentacja projektu: Radioaktywność - Baza Grafowa<a class="headerlink" href="#dokumentacja-projektu-radioaktywnosc-baza-grafowa" title="Link to this heading">¶</a></h1>
+<p>Witaj w automatycznie generowanej dokumentacji projektu! Poniżej znajdziesz opis architektury interfejsu oraz pełną dokumentację kodu backendu i frontendu.</p>
 <div class="toctree-wrapper compound">
 </div>
+</section>
+<section id="backend-python-fastapi">
+<h1>Backend (Python / FastAPI)<a class="headerlink" href="#backend-python-fastapi" title="Link to this heading">¶</a></h1>
+<section id="module-routes">
+<span id="logika-api-routes-py"></span><h2>Logika API (routes.py)<a class="headerlink" href="#module-routes" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="routes.get_isotope_decay_chain">
+<span class="sig-prename descclassname"><span class="pre">routes.</span></span><span class="sig-name descname"><span class="pre">get_isotope_decay_chain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nazwa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#routes.get_isotope_decay_chain" title="Link to this definition">¶</a></dt>
+<dd><p>Zwraca strukturę grafu izotopu wraz z jego przodkami i potomkami w formacie Cytoscape.</p>
+<p>Endpoint odpytuje bazę Neo4j w celu znalezienia ścieżek do 15 kroków w dół (w co rozpada się izotop)
+oraz do 15 kroków w górę (co rozpada się w ten izotop). Przekształca wyniki na format
+zgodny z biblioteką frontendową Cytoscape.js.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parametry<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nazwa</strong> (<em>str</em>) – Nazwa głównego (centralnego) izotopu dla grafu (np. «U-238»).</p>
+</dd>
+<dt class="field-even">Zwraca<span class="colon">:</span></dt>
+<dd class="field-even"><p>Lista węzłów i krawędzi (relacji) sformatowana dla Cytoscape.js.
+Zawiera parametry takie jak id, label, type, source, target oraz prawdopodobieństwo rozpadu.</p>
+</dd>
+<dt class="field-odd">Typ zwracany<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="routes.get_isotope_details">
+<span class="sig-prename descclassname"><span class="pre">routes.</span></span><span class="sig-name descname"><span class="pre">get_isotope_details</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nazwa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#routes.get_isotope_details" title="Link to this definition">¶</a></dt>
+<dd><p>Pobiera szczegółowe dane fizyczne dla konkretnego izotopu.</p>
+<p>Wyszukuje w bazie grafowej Neo4j węzeł odpowiadający podanej nazwie.
+Jeśli w bazie zapisane są dane widma (w formacie JSON), zostają one zdeserializowane.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parametry<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nazwa</strong> (<em>str</em>) – Pełna nazwa izotopu (np. «U-238»).</p>
+</dd>
+<dt class="field-even">Wyrzuca<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>HTTPException</strong> – Kod 404, jeśli izotop o podanej nazwie nie istnieje w bazie.</p>
+</dd>
+<dt class="field-odd">Zwraca<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Szczegółowe parametry izotopu obejmujące liczbę Z, A, czas półtrwania,
+prawdopodobieństwo spontanicznego rozszczepienia (sf_prob) oraz widmo.</p>
+</dd>
+<dt class="field-even">Typ zwracany<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="routes.get_isotope_evolution">
+<span class="sig-prename descclassname"><span class="pre">routes.</span></span><span class="sig-name descname"><span class="pre">get_isotope_evolution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nazwa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#routes.get_isotope_evolution" title="Link to this definition">¶</a></dt>
+<dd><p>Oblicza ewolucję łańcucha rozpadu w czasie wykorzystując równania Batemana.</p>
+<p>Na podstawie biblioteki <cite>radioactivedecay</cite> symuluje populację izotopów potomnych
+w 50 równych krokach czasowych. Całkowity czas symulacji wynosi 5 czasów półtrwania
+badanego izotopu. Izotopy stabilne oraz posiadające nieskończony czas półtrwania
+są pomijane w obliczeniach ewolucji.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parametry<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>nazwa</strong> (<em>str</em>) – Nazwa izotopu początkowego (np. «U-238»).</p>
+</dd>
+<dt class="field-even">Zwraca<span class="colon">:</span></dt>
+<dd class="field-even"><p>Wyniki symulacji zawierające flagę <cite>stable</cite>, czas półtrwania w sekundach (<cite>half_life_s</cite>)
+oraz listę <cite>data</cite>, w której każdy element to stan ilościowy izotopów w danym kroku czasowym.</p>
+</dd>
+<dt class="field-odd">Typ zwracany<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="routes.get_segre_chart_data">
+<span class="sig-prename descclassname"><span class="pre">routes.</span></span><span class="sig-name descname"><span class="pre">get_segre_chart_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#routes.get_segre_chart_data" title="Link to this definition">¶</a></dt>
+<dd><p>Pobiera minimalny zestaw danych o wszystkich izotopach niezbędny do wyrysowania siatki na frontendzie.</p>
+<p>Przeszukuje bazę Neo4j i wyciąga podstawowe parametry (liczbę atomową Z, liczbę masową A
+oraz czas półtrwania). Na podstawie czasu półtrwania przypisuje izotopom flagę stabilności.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Zwraca<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Lista słowników zawierająca dane izotopów. Każdy słownik posiada klucze:
+nazwa, Z, A, czas_poltrwania, nazwa_pierwiastka oraz typ.</p>
+</dd>
+<dt class="field-even">Typ zwracany<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-database">
+<span id="baza-danych-database-py"></span><h2>Baza Danych (database.py)<a class="headerlink" href="#module-database" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="database.Neo4jConnection">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">database.</span></span><span class="sig-name descname"><span class="pre">Neo4jConnection</span></span><a class="headerlink" href="#database.Neo4jConnection" title="Link to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="database.Neo4jConnection.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#database.Neo4jConnection.close" title="Link to this definition">¶</a></dt>
+<dd><p>Bezpiecznie zamyka aktywne połączenie (sterownik) z bazą Neo4j.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-main">
+<span id="inicjalizacja-main-py"></span><h2>Inicjalizacja (main.py)<a class="headerlink" href="#module-main" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="main.lifespan">
+<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">lifespan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FastAPI</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main.lifespan" title="Link to this definition">¶</a></dt>
+<dd><p>Zarządza cyklem życia aplikacji FastAPI.</p>
+<p>Asynchroniczny menedżer kontekstu zastępujący zdarzenia «startup» i «shutdown».
+Kod znajdujący się przed instrukcją <cite>yield</cite> wykonuje się podczas startu serwera,
+natomiast kod po <cite>yield</cite> gwarantuje bezpieczne zwolnienie zasobów przy
+wyłączaniu aplikacji (w tym przypadku zamyka połączenie ze sterownikiem bazy Neo4j).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parametry<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>app</strong> (<em>FastAPI</em>) – Główna instancja aplikacji FastAPI.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-populate_db">
+<span id="skrypt-zasilajacy-populate-db-py"></span><h2>Skrypt zasilający (populate_db.py)<a class="headerlink" href="#module-populate_db" title="Link to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="populate_db.populate_entire_database">
+<span class="sig-prename descclassname"><span class="pre">populate_db.</span></span><span class="sig-name descname"><span class="pre">populate_entire_database</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#populate_db.populate_entire_database" title="Link to this definition">¶</a></dt>
+<dd><p>Kompleksowo zasila bazę grafową Neo4j pełnymi danymi izotopów i relacjami rozpadów.</p>
+<p>Funkcja usuwa dotychczasowe dane z bazy, a następnie pobiera pełną listę izotopów
+z biblioteki <cite>radioactivedecay</cite>. Dla każdego niestabilnego izotopu wyciąga parametry
+(Z, A, czas półtrwania, prawdopodobieństwo SF), dołącza dane widm z pliku JSON
+wygenerowanego na podstawie biblioteki PyNE i zapisuje jako węzły w Neo4j. Odtwarza
+również drzewo rozpadów, tworząc relacje (np. ROZPAD_ALFA, ROZPAD_BETA_MINUS)
+pomiędzy izotopami, a na koniec łączy je z odpowiednimi węzłami Pierwiastków chemicznych.</p>
+<div class="admonition note">
+<p class="admonition-title">Informacja</p>
+<p>Wymaga dostępu do bazy Neo4j skonfigurowanej za pomocą zmiennych środowiskowych
+<cite>NEO4J_URI</cite>, <cite>NEO4J_USER</cite> oraz <cite>NEO4J_PASSWORD</cite>.</p>
+</div>
+</dd></dl>
+
+</section>
+</section>
+<section id="frontend-javascript">
+<h1>Frontend (JavaScript)<a class="headerlink" href="#frontend-javascript" title="Link to this heading">¶</a></h1>
+<section id="logika-siatki-izotopow-app-js">
+<h2>Logika siatki izotopów (app.js)<a class="headerlink" href="#logika-siatki-izotopow-app-js" title="Link to this heading">¶</a></h2>
+<dl class="js function">
+<dt class="sig sig-object js" id="getIsomerLevel">
+<span class="sig-name descname"><span class="n"><span class="pre">getIsomerLevel</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#getIsomerLevel" title="Link to this definition">¶</a></dt>
+<dd><p>Określa poziom stanu izomerycznego (wzbudzenia) izotopu na podstawie jego nazwy.</p>
+<p>Analizuje sufiksy w nazwie izotopu (takie jak «m», «m1», «n», «p»), aby sklasyfikować go
+jako stan podstawowy lub jeden ze stanów wzbudzonych. Wykorzystywane do filtrowania
+warstw na głównym wykresie.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Argumenty<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<strong>string</strong>) – Nazwa izotopu do weryfikacji (np. „Tc-99m”).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Zwraca<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>number</strong> – Liczba całkowita reprezentująca poziom wzbudzenia: 0 (stan podstawowy), 1, 2 lub 3.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="getColorForHalfLife">
+<span class="sig-name descname"><span class="n"><span class="pre">getColorForHalfLife</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hlStr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#getColorForHalfLife" title="Link to this definition">¶</a></dt>
+<dd><p>Konwertuje tekstowy czas półtrwania na odpowiedni kolor na mapie izotopów.</p>
+<p>Rozpoznaje jednostki czasu (od nanosekund po lata), przelicza wartość na sekundy,
+a następnie używa skali logarytmicznej do wygenerowania odpowiedniego koloru z predefiniowanej
+palety termicznej (od czerwonego do niebieskiego). Izotopy stabilne są rysowane na czarno.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Argumenty<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hlStr</strong> (<strong>string</strong>) – Czas półtrwania w postaci tekstowej wraz z jednostką (np. „4.468e9 y”, „Stable”).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Zwraca<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>string</strong> – Kod koloru w formacie HEX przypisany do danego czasu półtrwania.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="renderChart">
+<span class="sig-name descname"><span class="n"><span class="pre">renderChart</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">levelFilter</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#renderChart" title="Link to this definition">¶</a></dt>
+<dd><p>Rysuje lub aktualizuje siatkę izotopów na głównym wykresie D3.</p>
+<p>Pobiera pełny zbiór izotopów i filtruje go według wybranego poziomu izomerycznego.
+Tworzy elementy SVG w odpowiednich koordynatach Z i N. Podpina również
+zdarzenia myszy do wyświetlania dynamicznych tooltipów oraz otwierania panelu bocznego po kliknięciu.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Argumenty<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>levelFilter</strong> (<strong>number</strong>) – Poziom stanu izomerycznego (0-3), który ma zostać wyrenderowany.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Zwraca<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>void</strong> – Modyfikuje bezpośrednio wyselekcjonowaną grupę SVG w DOM.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="openPanel">
+<span class="sig-name descname"><span class="n"><span class="pre">openPanel</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">isotope</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openPanel" title="Link to this definition">¶</a></dt>
+<dd><p>Otwiera panel boczny i wypełnia go podstawowymi danymi wybranego izotopu.</p>
+<p>Aktualizuje węzły tekstowe w DOM na podstawie przekazanego obiektu,
+zdejmując z panelu klasę ukrywającą go przed użytkownikiem.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Argumenty<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>isotope</strong> (<strong>Object</strong>) – Obiekt reprezentujący wybrany izotop (musi zawierać nazwę, Z, A, czas półtrwania oraz nazwę pierwiastka).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Zwraca<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>void</strong> – Modyfikuje bezpośrednio zawartość panelu w strukturze DOM.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="logika-szczegolow-details-js">
+<h2>Logika szczegółów (details.js)<a class="headerlink" href="#logika-szczegolow-details-js" title="Link to this heading">¶</a></h2>
+<dl class="js function">
+<dt class="sig sig-object js" id="drawBranchingChart">
+<span class="sig-name descname"><span class="n"><span class="pre">drawBranchingChart</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edgesData</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centralNodeId</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drawBranchingChart" title="Link to this definition">¶</a></dt>
+<dd><p>Rysuje wykres kołowy (donut chart) przedstawiający prawdopodobieństwa poszczególnych dróg rozpadu dla badanego izotopu.</p>
+<p>Funkcja filtruje krawędzie wychodzące z głównego izotopu, zamienia ich prawdopodobieństwa
+na procenty i renderuje wykres SVG przy użyciu biblioteki D3.js. Jeśli izotop jest stabilny
+(brak krawędzi wychodzących), wyświetla stosowny komunikat tekstowy zamiast wykresu.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Argumenty<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>edgesData</strong> (<strong>Array.&lt;Object&gt;</strong>) – Lista obiektów krawędzi (z grafu Cytoscape) zawierających dane o relacjach i prawdopodobieństwach rozpadu.</p></li>
+<li><p><strong>centralNodeId</strong> (<strong>string</strong>) – Identyfikator (nazwa) głównego izotopu, dla którego analizowane są rozpadu wychodzące.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Zwraca<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>void</strong> – Funkcja modyfikuje bezpośrednio drzewo DOM, niczego nie zwracając.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="drawEvolutionChart">
+<span class="sig-name descname"><span class="n"><span class="pre">drawEvolutionChart</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">evolutionResponse</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drawEvolutionChart" title="Link to this definition">¶</a></dt>
+<dd><p>Rysuje interaktywny wykres liniowy przedstawiający ewolucję populacji izotopów w czasie (na podstawie równań Batemana).</p>
+<p>Wykorzystuje D3.js do wygenerowania wykresu ze skalą logarytmiczną na osi Y (aby uwidocznić populacje śladowe)
+oraz osią X wyrażoną w krotnościach czasu półtrwania izotopu matki. Zawiera interaktywną legendę,
+pozwalającą użytkownikowi na włączanie i wyłączanie widoczności poszczególnych izotopów na wykresie.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Argumenty<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>evolutionResponse</strong> (<strong>Object</strong>) – Obiekt JSON z danymi ewolucji pobranymi z backendu (zawiera flagę stabilności, czas półtrwania i dane historyczne).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Zwraca<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>void</strong> – Funkcja modyfikuje bezpośrednio drzewo DOM.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="drawSpectrumChart">
+<span class="sig-name descname"><span class="n"><span class="pre">drawSpectrumChart</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spectra</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#drawSpectrumChart" title="Link to this definition">¶</a></dt>
+<dd><p>Generuje interaktywny wykres widma promieniowania jonizującego w formie wykresu igłowego (stem-and-bulb).</p>
+<p>Używa D3.js do narysowania dyskretnych linii emisyjnych dla promieniowania alfa i gamma.
+Skala X (energia w keV) wykorzystuje transformację logarytmiczną w celu lepszej czytelności
+szerokich zakresów energii. Implementuje ukryte domyślnie etykiety narzędziowe (tooltipy),
+które pojawiają się po najechaniu kursorem na prążek widma, wyświetlając dokładną energię i wydajność rozpadu.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Argumenty<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spectra</strong> (<strong>Object|null</strong>) – Obiekt z danymi widma pobrany z bazy danych lub wartość null, jeśli izotop nie posiada dyskretnych linii emisyjnych.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Zwraca<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>void</strong> – Funkcja modyfikuje bezpośrednio drzewo DOM.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
 </section>
 
         </article>
