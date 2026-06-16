@@ -27,4 +27,4 @@ Projekt wykorzystujący FastAPI, Neo4j oraz statyczny frontend (JS/HTML), konten
 
 ## Dokumentacja
   
-Dokumentacja znajduje się pod linkiem [https://github.com/orzel320/BD2_project_RO/actions](https://github.com/orzel320/BD2_project_RO/actions)
+Dokumentacja znajduje się pod linkiem [https://orzel320.github.io/BD2_project_RO/](https://orzel320.github.io/BD2_project_RO/)
