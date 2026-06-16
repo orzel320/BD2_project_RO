@@ -24,3 +24,7 @@ Projekt wykorzystujący FastAPI, Neo4j oraz statyczny frontend (JS/HTML), konten
     * Użytkownik: neo4j
     * Hasło: projektBD2
     * Bolt URI: bolt://localhost:7687
+
+## Dokumentacja
+  
+Dokumentacja znajduje się pod linkiem [https://github.com/orzel320/BD2_project_RO/actions](https://github.com/orzel320/BD2_project_RO/actions)

@@ -1,6 +1,16 @@
 # Dokumentacja struktury interfejsu użytkownika (UI)
 
-Rozdział ten opisuje statyczną strukturę plików HTML oraz definicje stylów CSS, które stanowią szkielet aplikacji. Logika interaktywna dla tych widoków znajduje się w dedykowanych skryptach JavaScript.
+Rozdział ten opisuje wykorzystane technologie i wzorce architektoniczne, oraz statyczną strukturę plików HTML oraz definicje stylów CSS, które stanowią szkielet aplikacji. Logika interaktywna dla tych widoków znajduje się w dedykowanych skryptach JavaScript.
+
+## Wykorzystane technologie i wzorce architektoniczne
+
+Projekt został zrealizowany w oparciu o nowoczesny stos technologiczny, ściśle realizując założenia postawione w wymaganiach:
+
+* **Grafowa Baza Danych:** Zastosowano **Neo4j** jako natywną grafową bazę danych. Jej wybór podyktowany jest specyfiką modelowanej domeny, gdzie izotopy (węzły) i drogi rozpadu promieniotwórczego (relacje skierowane) tworzą naturalną strukturę grafową.
+* **Technologia Serwisu (Backend):** Logikę serwera opracowano w języku **Python**, wykorzystując asynchroniczny framework **FastAPI**.
+* **Styl Architektoniczny (REST):** System komunikacji oparto o styl **REST** (Representational State Transfer). Backend pełni wyłącznie rolę bezstanowego API, wystawiającego odpowiednie endpointy (np. `/api/isotope/{nazwa}`), które zwracają ustrukturyzowane dane w formacie JSON.
+* **Model Aplikacji (SPA):** Interfejs użytkownika zrealizowano w architekturze zbliżonej do **SPA (Single Page Application)**. Frontend (HTML, CSS, JS) jest całkowicie odseparowany od logiki biznesowej i komunikuje się z serwerem wyłącznie asynchronicznie (metoda `fetch`). Dzięki temu renderowanie i aktualizacja skomplikowanych widoków (np. grafów Cytoscape czy wykresów D3.js) odbywa się po stronie klienta, co wyklucza konieczność stosowania klasycznego, serwerowego wzorca MVC (typu MPA).
+* **Wdrożenie i Izolacja:** Całość została skonteneryzowana przy użyciu środowiska **Docker** (i orkiestracji Docker Compose), co zapewnia pełną izolację zależności i ujednolicone środowisko uruchomieniowe.
 
 ## 1. `index.html` - Główny widok (Diagram Segrè)
 

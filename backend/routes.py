@@ -109,10 +109,8 @@ def get_isotope_decay_chain(nazwa: str):
     """
     query = """
     MATCH (start:Izotop {nazwa: $nazwa})
-    // Szukamy potomków (w dół drzewa)
-    OPTIONAL MATCH p_down = (start)-[*1..15]->(down)
-    // Szukamy przodków (w górę drzewa)
-    OPTIONAL MATCH p_up = (start)<-[*1..15]-(up)
+    OPTIONAL MATCH p_down = (start)-[*1..15]->(down:Izotop)
+    OPTIONAL MATCH p_up = (start)<-[*1..15]-(up:Izotop)
     
     RETURN start, collect(p_down) AS downs, collect(p_up) AS ups
     """
