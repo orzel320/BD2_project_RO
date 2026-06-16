@@ -2,10 +2,12 @@
 <html class="no-js" lang="pl" data-content_root="./">
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="color-scheme" content="light dark"><link rel="index" title="Indeks" href="genindex.html"><link rel="search" title="Szukaj" href="search.html">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Indeks" href="genindex.html"><link rel="search" title="Szukaj" href="search.html"><link rel="prev" title="Dokumentacja struktury interfejsu użytkownika (UI)" href="ui_architecture.html">
 
-    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 --><title>Indeks modułów Pythona - Radioaktywność - Baza Grafowa - dokumentacja</title>
-<link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
+    <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
+        <title>Diagramy UML i Architektura Systemu - Radioaktywność - Baza Grafowa - dokumentacja</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx_js.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -171,7 +173,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -190,9 +192,9 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Architektura:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="ui_architecture.html">Dokumentacja struktury interfejsu użytkownika (UI)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="uml_diagrams.html">Diagramy UML i Architektura Systemu</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Diagramy UML i Architektura Systemu</a></li>
 </ul>
 
 </div>
@@ -212,7 +214,13 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          <div class="theme-toggle-container theme-toggle-content">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/uml_diagrams.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
               <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
               <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
@@ -220,66 +228,72 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          
-<section class="domainindex-section">
-  <h1>Indeks modułów Pythona</h1>
-  <div class="domainindex-jumpbox"><a href="#cap-d"><strong>d</strong></a> | <a href="#cap-m"><strong>m</strong></a> | <a href="#cap-p"><strong>p</strong></a> | <a href="#cap-r"><strong>r</strong></a></div>
+          <section id="diagramy-uml-i-architektura-systemu">
+<h1>Diagramy UML i Architektura Systemu<a class="headerlink" href="#diagramy-uml-i-architektura-systemu" title="Link to this heading">¶</a></h1>
+<p>Poniższe diagramy obrazują architekturę projektu, schemat bazy danych oraz przepływ komunikacji pomiędzy poszczególnymi warstwami.</p>
+<section id="diagram-komponentow-architektura">
+<h2>1. Diagram Komponentów (Architektura)<a class="headerlink" href="#diagram-komponentow-architektura" title="Link to this heading">¶</a></h2>
+<p>Widok wysokiego poziomu przedstawiający z jakich modułów składa się aplikacja i w jaki sposób się one komunikują.</p>
+<pre  class="mermaid">
+        graph LR
+    User((Użytkownik)) &lt;--&gt;|Przeglądarka / HTTP| Frontend[Frontend: HTML/JS/CSS]
+    Frontend &lt;--&gt;|REST API / JSON| API[Backend: FastAPI]
+    API &lt;--&gt;|Sterownik Neo4j / Protokół Bolt| DB[(Baza Grafowa: Neo4j)]
+    </pre></section>
+<section id="diagram-klas-struktura-bazy-grafowej">
+<h2>2. Diagram Klas (Struktura Bazy Grafowej)<a class="headerlink" href="#diagram-klas-struktura-bazy-grafowej" title="Link to this heading">¶</a></h2>
+<p>Diagram obrazujący strukturę i ontologię danych w bazie Neo4j. Węzły pełnią funkcję klas, a krawędzie (relacje) łączą poszczególne obiekty.</p>
+<pre  class="mermaid">
+        classDiagram
+    class Pierwiastek {
+        +int Z
+        +String nazwa
+    }
+    class Izotop {
+        +String nazwa
+        +int Z
+        +int A
+        +String czas_poltrwania
+        +float prawdopodobienstwo_SF
+        +JSON widmo
+    }
+    
+    Pierwiastek &quot;1&quot; --&gt; &quot;1..*&quot; Izotop : POSIADA_IZOTOP
+    Izotop &quot;1&quot; --&gt; &quot;0..*&quot; Izotop : ROZPAD_ALFA
+    Izotop &quot;1&quot; --&gt; &quot;0..*&quot; Izotop : ROZPAD_BETA_MINUS
+    Izotop &quot;1&quot; --&gt; &quot;0..*&quot; Izotop : ROZPAD_BETA_PLUS_LUB_EC
+    Izotop &quot;1&quot; --&gt; &quot;0..*&quot; Izotop : PRZEJSCIE_IZOMERYCZNE
+    Izotop &quot;1&quot; --&gt; &quot;0..*&quot; Izotop : INNY_ROZPAD
+    </pre></section>
+<section id="diagram-sekwencji-przeplyw-danych">
+<h2>3. Diagram Sekwencji (Przepływ danych)<a class="headerlink" href="#diagram-sekwencji-przeplyw-danych" title="Link to this heading">¶</a></h2>
+<p>Scenariusz komunikacji w momencie, gdy użytkownik wybiera konkretny izotop na głównej siatce w celu poznania jego szczegółów (details.html).</p>
+<pre  class="mermaid">
+        sequenceDiagram
+    actor User as Użytkownik
+    participant UI as Frontend (details.js)
+    participant API as Backend (FastAPI)
+    participant DB as Neo4j
+    
+    User-&gt;&gt;UI: Wybiera izotop z siatki Segrè
+    UI-&gt;&gt;API: GET /api/isotope/{nazwa}
+    API-&gt;&gt;DB: MATCH (n:Izotop) ...
+    DB--&gt;&gt;API: Zwraca właściwości węzła (Z, A, widmo)
+    API--&gt;&gt;UI: Zwraca obiekt JSON
+    UI-&gt;&gt;User: Wyświetla właściwości i widmo
+    
+    UI-&gt;&gt;API: GET /api/isotope/{nazwa}/decay-chains
+    API-&gt;&gt;DB: Odpytanie o ścieżki rozpadów (do 15 kroków)
+    DB--&gt;&gt;API: Zwraca kolekcję relacji i węzłów
+    API--&gt;&gt;UI: Zwraca dane w formacie Cytoscape
+    UI-&gt;&gt;User: Renderuje graf topologii izotopu
+    </pre></section>
 </section>
-<table class="domainindex-table">
-  <tr class="pcap">
-    <td></td><td>&#160;</td><td></td>
-  </tr>
-  <tr class="cap" id="cap-d">
-    <td></td><td><strong>d</strong></td><td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td>
-        <a href="index.html#module-database"><code class="xref">database</code></a></td><td>
-    <em></em></td>
-  </tr>
-  <tr class="pcap">
-    <td></td><td>&#160;</td><td></td>
-  </tr>
-  <tr class="cap" id="cap-m">
-    <td></td><td><strong>m</strong></td><td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td>
-        <a href="index.html#module-main"><code class="xref">main</code></a></td><td>
-    <em></em></td>
-  </tr>
-  <tr class="pcap">
-    <td></td><td>&#160;</td><td></td>
-  </tr>
-  <tr class="cap" id="cap-p">
-    <td></td><td><strong>p</strong></td><td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td>
-        <a href="index.html#module-populate_db"><code class="xref">populate_db</code></a></td><td>
-    <em></em></td>
-  </tr>
-  <tr class="pcap">
-    <td></td><td>&#160;</td><td></td>
-  </tr>
-  <tr class="cap" id="cap-r">
-    <td></td><td><strong>r</strong></td><td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td>
-        <a href="index.html#module-routes"><code class="xref">routes</code></a></td><td>
-    <em></em></td>
-  </tr>
-</table>
 
         </article>
       </div>
@@ -287,7 +301,17 @@
         
         <div class="related-pages">
           
-          
+          <a class="prev-page" href="ui_architecture.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Dokumentacja struktury interfejsu użytkownika (UI)</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -306,8 +330,29 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Diagramy UML i Architektura Systemu</a><ul>
+<li><a class="reference internal" href="#diagram-komponentow-architektura">1. Diagram Komponentów (Architektura)</a></li>
+<li><a class="reference internal" href="#diagram-klas-struktura-bazy-grafowej">2. Diagram Klas (Struktura Bazy Grafowej)</a></li>
+<li><a class="reference internal" href="#diagram-sekwencji-przeplyw-danych">3. Diagram Sekwencji (Przepływ danych)</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
@@ -753,6 +798,5 @@ mermaid.initialize(
 
 window.addEventListener("load", load);
 window.runMermaid = runMermaid;</script>
-    
-    <script>DOCUMENTATION_OPTIONS.COLLAPSE_INDEX = true</script></body>
+    </body>
 </html>

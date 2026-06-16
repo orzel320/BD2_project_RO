@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Indeks" href="genindex.html"><link rel="search" title="Szukaj" href="search.html">
+<link rel="index" title="Indeks" href="genindex.html"><link rel="search" title="Szukaj" href="search.html"><link rel="next" title="Dokumentacja struktury interfejsu użytkownika (UI)" href="ui_architecture.html">
 
     <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
         <title>Radioaktywność - Baza Grafowa - dokumentacja</title>
@@ -191,7 +191,12 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  
+  <p class="caption" role="heading"><span class="caption-text">Architektura:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ui_architecture.html">Dokumentacja struktury interfejsu użytkownika (UI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uml_diagrams.html">Diagramy UML i Architektura Systemu</a></li>
+</ul>
+
 </div>
 </div>
 
@@ -232,6 +237,22 @@
 <h1>Dokumentacja projektu: Radioaktywność - Baza Grafowa<a class="headerlink" href="#dokumentacja-projektu-radioaktywnosc-baza-grafowa" title="Link to this heading">¶</a></h1>
 <p>Witaj w automatycznie generowanej dokumentacji projektu! Poniżej znajdziesz opis architektury interfejsu oraz pełną dokumentację kodu backendu i frontendu.</p>
 <div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Architektura:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ui_architecture.html">Dokumentacja struktury interfejsu użytkownika (UI)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ui_architecture.html#wykorzystane-technologie-i-wzorce-architektoniczne">Wykorzystane technologie i wzorce architektoniczne</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ui_architecture.html#index-html-glowny-widok-diagram-segre">1. <code class="docutils literal notranslate"><span class="pre">index.html</span></code> - Główny widok (Diagram Segrè)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ui_architecture.html#details-html-widok-szczegolow-izotopu-dashboard">2. <code class="docutils literal notranslate"><span class="pre">details.html</span></code> - Widok szczegółów izotopu (Dashboard)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ui_architecture.html#style-css-arkusz-stylow">3. <code class="docutils literal notranslate"><span class="pre">style.css</span></code> - Arkusz stylów</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="uml_diagrams.html">Diagramy UML i Architektura Systemu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="uml_diagrams.html#diagram-komponentow-architektura">1. Diagram Komponentów (Architektura)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uml_diagrams.html#diagram-klas-struktura-bazy-grafowej">2. Diagram Klas (Struktura Bazy Grafowej)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uml_diagrams.html#diagram-sekwencji-przeplyw-danych">3. Diagram Sekwencji (Przepływ danych)</a></li>
+</ul>
+</li>
+</ul>
 </div>
 </section>
 <section id="backend-python-fastapi">
@@ -524,7 +545,15 @@ które pojawiają się po najechaniu kursorem na prążek widma, wyświetlając 
       <footer>
         
         <div class="related-pages">
-          
+          <a class="next-page" href="ui_architecture.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Dokumentacja struktury interfejsu użytkownika (UI)</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
           
         </div>
         <div class="bottom-of-page">

@@ -8,6 +8,7 @@ Witaj w automatycznie generowanej dokumentacji projektu! Poniżej znajdziesz opi
    :caption: Architektura:
 
    ui_architecture.md
+   uml_diagrams.md
 
 Backend (Python / FastAPI)
 ==========================
