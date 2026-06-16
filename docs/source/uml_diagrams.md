@@ -33,11 +33,7 @@ classDiagram
     }
     
     Pierwiastek "1" --> "1..*" Izotop : POSIADA_IZOTOP
-    Izotop "1" --> "0..*" Izotop : ROZPAD_ALFA
-    Izotop "1" --> "0..*" Izotop : ROZPAD_BETA_MINUS
-    Izotop "1" --> "0..*" Izotop : ROZPAD_BETA_PLUS_LUB_EC
-    Izotop "1" --> "0..*" Izotop : PRZEJSCIE_IZOMERYCZNE
-    Izotop "1" --> "0..*" Izotop : INNY_ROZPAD
+    Izotop "1" --> "0..*" Izotop : ROZPAD (α, β⁻, β⁺, IT, inne)
 ```
 
 ## 3. Diagram Sekwencji (Przepływ danych)
