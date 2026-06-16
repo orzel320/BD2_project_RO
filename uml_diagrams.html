@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Indeks" href="genindex.html"><link rel="search" title="Szukaj" href="search.html"><link rel="prev" title="Dokumentacja struktury interfejsu użytkownika (UI)" href="ui_architecture.html">
+<link rel="index" title="Indeks" href="genindex.html"><link rel="search" title="Szukaj" href="search.html"><link rel="next" title="Dokumentacja Kodu (API)" href="api_reference.html"><link rel="prev" title="Dokumentacja struktury interfejsu użytkownika (UI)" href="ui_architecture.html">
 
     <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
         <title>Diagramy UML i Architektura Systemu - Radioaktywność - Baza Grafowa - dokumentacja</title>
@@ -195,6 +195,9 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="ui_architecture.html">Dokumentacja struktury interfejsu użytkownika (UI)</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Diagramy UML i Architektura Systemu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">Dokumentacja Kodu (API)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#backend-python-fastapi">Backend (Python / FastAPI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html#frontend-javascript">Frontend (JavaScript)</a></li>
 </ul>
 
 </div>
@@ -264,11 +267,7 @@
     }
     
     Pierwiastek &quot;1&quot; --&gt; &quot;1..*&quot; Izotop : POSIADA_IZOTOP
-    Izotop &quot;1&quot; --&gt; &quot;0..*&quot; Izotop : ROZPAD_ALFA
-    Izotop &quot;1&quot; --&gt; &quot;0..*&quot; Izotop : ROZPAD_BETA_MINUS
-    Izotop &quot;1&quot; --&gt; &quot;0..*&quot; Izotop : ROZPAD_BETA_PLUS_LUB_EC
-    Izotop &quot;1&quot; --&gt; &quot;0..*&quot; Izotop : PRZEJSCIE_IZOMERYCZNE
-    Izotop &quot;1&quot; --&gt; &quot;0..*&quot; Izotop : INNY_ROZPAD
+    Izotop &quot;1&quot; --&gt; &quot;0..*&quot; Izotop : ROZPAD (α, β⁻, β⁺, IT, inne)
     </pre></section>
 <section id="diagram-sekwencji-przeplyw-danych">
 <h2>3. Diagram Sekwencji (Przepływ danych)<a class="headerlink" href="#diagram-sekwencji-przeplyw-danych" title="Link to this heading">¶</a></h2>
@@ -300,7 +299,15 @@
       <footer>
         
         <div class="related-pages">
-          
+          <a class="next-page" href="api_reference.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Dokumentacja Kodu (API)</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
           <a class="prev-page" href="ui_architecture.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
