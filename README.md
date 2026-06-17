@@ -28,3 +28,5 @@ Projekt wykorzystujący FastAPI, Neo4j oraz statyczny frontend (JS/HTML), konten
 ## Dokumentacja
   
 Dokumentacja została wygenerowana z pomocą biblioteki Sphinx i znajduje się pod linkiem [https://orzel320.github.io/BD2_project_RO/](https://orzel320.github.io/BD2_project_RO/)
+
+Link do repozytorium to [https://github.com/orzel320/BD2_project_RO](https://github.com/orzel320/BD2_project_RO)
