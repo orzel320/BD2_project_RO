@@ -2,7 +2,7 @@
 
 Projekt wykorzystujący FastAPI, Neo4j oraz statyczny frontend (JS/HTML), konteneryzowany za pomocą Docker Compose.
 
-## Szybki start
+## Wdrożenie
 
 1. **Uruchomienie kontenerów w tle:**
 
