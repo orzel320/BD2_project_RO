@@ -19,6 +19,7 @@ SET n.czas_poltrwania = $hl,
     n.A = $a, 
     n.prawdopodobienstwo_SF = $sf_prob,
     n.widmo = $widmo
+```
 
 **Tworzenie relacji rozpadu z dynamicznym typem za pomocą f-stringa w Pythonie:**
 
