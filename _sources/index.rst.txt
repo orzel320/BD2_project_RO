@@ -9,4 +9,5 @@ Oto dokumentacji projektu. Poniżej znajduje się opis architektury interfejsu o
 
    ui_architecture.md
    uml_diagrams.md
+   cypher_queries.md
    api_reference.rst
