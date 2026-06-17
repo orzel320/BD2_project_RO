@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Indeks" href="genindex.html"><link rel="search" title="Szukaj" href="search.html"><link rel="next" title="Diagramy UML i Architektura Systemu" href="uml_diagrams.html"><link rel="prev" title="Opis projeku, Źródła Danych i Obliczenia Fizyczne" href="project_description.html">
+<link rel="index" title="Indeks" href="genindex.html"><link rel="search" title="Szukaj" href="search.html"><link rel="next" title="Dokumentacja struktury interfejsu użytkownika (UI)" href="ui_architecture.html"><link rel="prev" title="Dokumentacja projektu: Radioaktywność - Baza Grafowa" href="index.html">
 
     <!-- Generated with Sphinx 9.0.4 and Furo 2025.12.19 -->
-        <title>Dokumentacja struktury interfejsu użytkownika (UI) - Radioaktywność - Baza Grafowa - dokumentacja</title>
+        <title>Opis projeku, Źródła Danych i Obliczenia Fizyczne - Radioaktywność - Baza Grafowa - dokumentacja</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx_js.css" />
@@ -193,8 +193,8 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Architektura:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="project_description.html">Opis projeku, Źródła Danych i Obliczenia Fizyczne</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Dokumentacja struktury interfejsu użytkownika (UI)</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Opis projeku, Źródła Danych i Obliczenia Fizyczne</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ui_architecture.html">Dokumentacja struktury interfejsu użytkownika (UI)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="uml_diagrams.html">Diagramy UML i Architektura Systemu</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cypher_queries.html">Zapytania Cypher (Polecenia bazy grafowej)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_reference.html">Dokumentacja Kodu (API)</a></li>
@@ -220,7 +220,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="_sources/ui_architecture.md.txt" title="View this page">
+  <a class="muted-link" href="_sources/project_description.md.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -238,78 +238,34 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="dokumentacja-struktury-interfejsu-uzytkownika-ui">
-<h1>Dokumentacja struktury interfejsu użytkownika (UI)<a class="headerlink" href="#dokumentacja-struktury-interfejsu-uzytkownika-ui" title="Link to this heading">¶</a></h1>
-<p>Rozdział ten opisuje wykorzystane technologie i wzorce architektoniczne, oraz statyczną strukturę plików HTML oraz definicje stylów CSS, które stanowią szkielet aplikacji. Logika interaktywna dla tych widoków znajduje się w dedykowanych skryptach JavaScript.</p>
-<section id="wykorzystane-technologie-i-wzorce-architektoniczne">
-<h2>Wykorzystane technologie i wzorce architektoniczne<a class="headerlink" href="#wykorzystane-technologie-i-wzorce-architektoniczne" title="Link to this heading">¶</a></h2>
-<p>Projekt został zrealizowany w oparciu o nowoczesny stos technologiczny, ściśle realizując założenia postawione w wymaganiach:</p>
+          <section id="opis-projeku-zrodla-danych-i-obliczenia-fizyczne">
+<h1>Opis projeku, Źródła Danych i Obliczenia Fizyczne<a class="headerlink" href="#opis-projeku-zrodla-danych-i-obliczenia-fizyczne" title="Link to this heading">¶</a></h1>
+<section id="opis-projektu">
+<h2>1. Opis Projektu<a class="headerlink" href="#opis-projektu" title="Link to this heading">¶</a></h2>
+<p>Aplikacja „Radioaktywność - Baza Grafowa” to interaktywny system służący do analizy i wizualizacji właściwości fizycznych oraz łańcuchów rozpadu izotopów promieniotwórczych. Wykorzystuje natywną bazę grafową (Neo4j) do modelowania izotopów jako węzłów oraz ich dróg rozpadu jako relacji skierowanych. Interfejs użytkownika oferuje interaktywną tablicę Segrè, grafy topologii rozpadów (Cytoscape.js) oraz symulacje ewolucji czasowej populacji izotopów (D3.js).</p>
+<p>Dane do bazy grafowej zostały pozyskane za pomocą dwóch bibliotek Pythonowych, <code class="docutils literal notranslate"><span class="pre">radioactivedecay</span></code> i <code class="docutils literal notranslate"><span class="pre">PyNE</span></code>.</p>
+</section>
+<section id="biblioteka-radioactivedecay-podstawowa-topologia-i-parametry">
+<h2>2. Biblioteka <code class="docutils literal notranslate"><span class="pre">radioactivedecay</span></code> (Podstawowa topologia i parametry)<a class="headerlink" href="#biblioteka-radioactivedecay-podstawowa-topologia-i-parametry" title="Link to this heading">¶</a></h2>
+<p>Głównym źródłem danych dla struktury izotopów, ich parametrów fizycznych oraz topologii łańcuchów rozpadu jest biblioteka <code class="docutils literal notranslate"><span class="pre">radioactivedecay</span></code>.</p>
 <ul class="simple">
-<li><p><strong>Grafowa Baza Danych:</strong> Zastosowano <strong>Neo4j</strong> jako natywną grafową bazę danych. Jej wybór podyktowany jest specyfiką modelowanej domeny, gdzie izotopy (węzły) i drogi rozpadu promieniotwórczego (relacje skierowane) tworzą naturalną strukturę grafową.</p></li>
-<li><p><strong>Technologia Serwisu (Backend):</strong> Logikę serwera opracowano w języku <strong>Python</strong>, wykorzystując asynchroniczny framework <strong>FastAPI</strong>.</p></li>
-<li><p><strong>Styl Architektoniczny (REST):</strong> System komunikacji oparto o styl <strong>REST</strong> (Representational State Transfer). Backend pełni wyłącznie rolę bezstanowego API, wystawiającego odpowiednie endpointy (np. <code class="docutils literal notranslate"><span class="pre">/api/isotope/{nazwa}</span></code>), które zwracają ustrukturyzowane dane w formacie JSON.</p></li>
-<li><p><strong>Model Aplikacji (SPA):</strong> Interfejs użytkownika zrealizowano w architekturze zbliżonej do <strong>SPA (Single Page Application)</strong>. Frontend (HTML, CSS, JS) jest całkowicie odseparowany od logiki biznesowej i komunikuje się z serwerem wyłącznie asynchronicznie (metoda <code class="docutils literal notranslate"><span class="pre">fetch</span></code>). Dzięki temu renderowanie i aktualizacja skomplikowanych widoków (np. grafów Cytoscape czy wykresów D3.js) odbywa się po stronie klienta, co wyklucza konieczność stosowania klasycznego, serwerowego wzorca MVC (typu MPA).</p></li>
-<li><p><strong>Wdrożenie i Izolacja:</strong> Całość została skonteneryzowana przy użyciu środowiska <strong>Docker</strong> (i orkiestracji Docker Compose), co zapewnia pełną izolację zależności i ujednolicone środowisko uruchomieniowe.</p></li>
+<li><p><strong>Zakres danych:</strong> Liczby atomowe (Z), liczby masowe (A), czasy półtrwania, stany izomeryczne oraz ułamki rozgałęzień  dla poszczególnych trybów rozpadu (np. α, β⁻, β⁺/EC, IT).</p></li>
+<li><p><strong>Pochodzenie danych:</strong> <code class="docutils literal notranslate"><span class="pre">radioactivedecay</span></code> wykorzystuje bazę <strong>ICRP107</strong> (Międzynarodowa Komisja Ochrony Radiologicznej).</p></li>
+<li><p><strong>Integracja z bazą grafową:</strong> Baza Neo4j jest zasilana tymi danymi w sposób zautomatyzowany poprzez skrypt <code class="docutils literal notranslate"><span class="pre">populate_db.py</span></code>, który odpytuje zbiór <code class="docutils literal notranslate"><span class="pre">rd.DEFAULTDATA</span></code> i mapuje go na węzły oraz relacje grafowe.</p></li>
 </ul>
 </section>
-<section id="index-html-glowny-widok-diagram-segre">
-<h2>1. <code class="docutils literal notranslate"><span class="pre">index.html</span></code> - Główny widok (Diagram Segrè)<a class="headerlink" href="#index-html-glowny-widok-diagram-segre" title="Link to this heading">¶</a></h2>
-<p>Plik definiuje strukturę strony startowej, zawierającej interaktywną mapę izotopów.</p>
+<section id="biblioteka-pyne-widma-emisyjne">
+<h2>3. Biblioteka «PyNE (Widma emisyjne)<a class="headerlink" href="#biblioteka-pyne-widma-emisyjne" title="Link to this heading">¶</a></h2>
+<p>Dyskretne widma promieniowania jonizującego zostały pierwotnie pozyskane z biblioteki <strong>PyNE</strong> (Python for Nuclear Engineering), która natywnie integruje potężne referencyjne bazy danych struktury jądrowej (m.in. ENSDF - <em>Evaluated Nuclear Structure Data File</em>). Na jej podstawie wygenerowano plik spectra.json, którego później użyto do wprowadzenia danych do bazy Neo4j. Nie zastosowano PyNE bezpośrednio z powodu braku kompatybilności z Windowsem.</p>
 <ul class="simple">
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">#controls-panel</span></code></strong>: Kontener nawigacyjny umieszczony w lewym górnym rogu.</p>
-<ul>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">.slider-container</span></code></strong>: Suwak (input range) do wyboru poziomu stanu izomerycznego (0-2).</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">.legend-container</span></code></strong>: Legenda kolorów reprezentująca rzędy wielkości czasu półtrwania izotopów.</p></li>
-</ul>
-</li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">#chart-container</span></code></strong>: Główny obszar roboczy zajmujący większość ekranu.</p>
-<ul>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">#segre-chart</span></code></strong>: Element SVG, w którym D3.js renderuje siatkę izotopów.</p></li>
-</ul>
-</li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">#details-panel</span></code></strong>: Wysuwany z prawej strony panel boczny. Wyświetla podstawowe parametry (Z, N, czas półtrwania) klikniętego izotopu i zawiera przycisk przejścia do widoku szczegółowego.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">#tooltip</span></code></strong>: Pływający element DOM, ukryty domyślnie, służący do wyświetlania etykiet po najechaniu kursorem na element siatki.</p></li>
-<li><p><strong>Zależności zewn.:</strong> D3.js (v7).</p></li>
+<li><p><strong>Zakres danych:</strong> Energie (wyrażone w keV) oraz prawdopodobieństwa emisji (intensywności prążków w %) dla promieniowania alfa oraz gamma.</p></li>
+<li><p><strong>Zastosowanie:</strong> Skrypt ładujący przypisuje te dane jako atrybut <code class="docutils literal notranslate"><span class="pre">widmo</span></code> (w zserializowanej postaci) bezpośrednio do węzłów klasy <code class="docutils literal notranslate"><span class="pre">Izotop</span></code>, co pozwala na natychmiastowe renderowanie interaktywnych widm igłowych na frontendzie bez konieczności odpytywania zewnętrznych usług.</p></li>
 </ul>
 </section>
-<section id="details-html-widok-szczegolow-izotopu-dashboard">
-<h2>2. <code class="docutils literal notranslate"><span class="pre">details.html</span></code> - Widok szczegółów izotopu (Dashboard)<a class="headerlink" href="#details-html-widok-szczegolow-izotopu-dashboard" title="Link to this heading">¶</a></h2>
-<p>Plik definiuje strukturę panelu analitycznego dla pojedynczego izotopu. Opiera się na układzie kafelkowym (kart).</p>
-<ul class="simple">
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">.dashboard-header</span></code></strong>: Nagłówek z przyciskiem powrotu do strony głównej oraz dynamicznym tytułem zawierającym nazwę izotopu.</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">.dashboard-grid</span></code></strong>: Główny kontener wykorzystujący CSS Grid do rozmieszczenia kart informacyjnych.</p>
-<ul>
-<li><p><strong>Karta 1 (Właściwości fizyczne)</strong>: Lista <code class="docutils literal notranslate"><span class="pre">&lt;ul&gt;</span></code> wyświetlająca podstawowe dane pobrane z API.</p></li>
-<li><p><strong>Karta 2 (Prawdopodobieństwo)</strong>: Kontener <code class="docutils literal notranslate"><span class="pre">#decay-chart</span></code> dla wykresu kołowego dróg rozpadu.</p></li>
-<li><p><strong>Karta 3 (Topologia)</strong>: Kontener <code class="docutils literal notranslate"><span class="pre">#cy-container</span></code> przeznaczony do renderowania grafu węzłów przez Cytoscape.js.</p></li>
-<li><p><strong>Karta 4 (Filtry)</strong>: Zestaw pól wyboru (checkbox) do włączania i wyłączania widoczności określonych typów rozpadu (α, β⁻, β⁺/ε) na grafie topologii.</p></li>
-<li><p><strong>Karta 5 (Widmo Emisyjne)</strong>: Element SVG rozciągnięty na dwie kolumny siatki, przeznaczony na wykres prążkowy promieniowania.</p></li>
-<li><p><strong>Karta 6 (Ewolucja)</strong>: Element SVG rozciągnięty na dwie kolumny siatki, przeznaczony na wykres liniowy równań Batemana.</p></li>
-</ul>
-</li>
-<li><p><strong>Zależności zewn.:</strong> Cytoscape.js (v3.28.1), D3.js (v7).</p></li>
-</ul>
-</section>
-<section id="style-css-arkusz-stylow">
-<h2>3. <code class="docutils literal notranslate"><span class="pre">style.css</span></code> - Arkusz stylów<a class="headerlink" href="#style-css-arkusz-stylow" title="Link to this heading">¶</a></h2>
-<p>Wspólny plik stylów dla obu widoków HTML. Wykorzystuje Flexbox i CSS Grid do pozycjonowania.</p>
-<ul class="simple">
-<li><p><strong>Style globalne</strong>: Usunięcie domyślnych marginesów, ustawienie czcionki «Segoe UI» oraz zablokowanie pasków przewijania (<code class="docutils literal notranslate"><span class="pre">overflow:</span> <span class="pre">hidden</span></code>) dla głównego widoku.</p></li>
-<li><p><strong>Diagram Segrè</strong>:</p>
-<ul>
-<li><p>Klasa <code class="docutils literal notranslate"><span class="pre">.isotope</span></code>: Definiuje obramowanie kwadratów na siatce i efekty najechania kursorem (zmiana grubości obramowania).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">#details-panel</span></code>: Kontroluje wysuwanie panelu bocznego za pomocą transformacji CSS (<code class="docutils literal notranslate"><span class="pre">transform:</span> <span class="pre">translateX(100%)</span></code>).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">.color-bar</span></code>: Generuje gradient tła dla legendy czasu półtrwania.</p></li>
-</ul>
-</li>
-<li><p><strong>Dashboard szczegółów</strong>:</p>
-<ul>
-<li><p>Klasa <code class="docutils literal notranslate"><span class="pre">.dashboard-grid</span></code>: Definiuje dwukolumnowy układ siatki (<code class="docutils literal notranslate"><span class="pre">grid-template-columns:</span> <span class="pre">repeat(2,</span> <span class="pre">1fr)</span></code>).</p></li>
-<li><p>Klasa <code class="docutils literal notranslate"><span class="pre">.card</span></code>: Standaryzuje wygląd kafelków (białe tło, zaokrąglenia, cienie, minimalna wysokość 250px).</p></li>
-</ul>
-</li>
-<li><p><strong>Elementy pomocnicze</strong>: Ustawienia przycisków (<code class="docutils literal notranslate"><span class="pre">.primary-btn</span></code>, <code class="docutils literal notranslate"><span class="pre">.back-btn</span></code>) oraz zachowanie tooltipa (wyłączenie interakcji wskaźnika przez <code class="docutils literal notranslate"><span class="pre">pointer-events:</span> <span class="pre">none</span></code>).</p></li>
-</ul>
+<section id="rownania-batemana-ewolucja-czasowa">
+<h2>3. Równania Batemana (Ewolucja czasowa)<a class="headerlink" href="#rownania-batemana-ewolucja-czasowa" title="Link to this heading">¶</a></h2>
+<p>Wykresy ewolucji łańcuchów rozpadu (dostępne w widoku szczegółów) nie opierają się na statycznych, wstępnie wyliczonych tabelach, lecz są generowane dynamicznie w czasie rzeczywistym.</p>
+<p>Backend wykorzystuje zaimplementowane w bibliotece <code class="docutils literal notranslate"><span class="pre">radioactivedecay</span></code> macierzowe rozwiązania <strong>równań Batemana</strong>. API symuluje rozpad centralnego izotopu dla czasu równego 5 okresom półtrwania, przekazując na frontend wektor danych o pojawiających się i znikających populacjach izotopów potomnych.</p>
 </section>
 </section>
 
@@ -318,23 +274,23 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="uml_diagrams.html">
+          <a class="next-page" href="ui_architecture.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Diagramy UML i Architektura Systemu</div>
+                <div class="title">Dokumentacja struktury interfejsu użytkownika (UI)</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="project_description.html">
+          <a class="prev-page" href="index.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Opis projeku, Źródła Danych i Obliczenia Fizyczne</div>
+                <div class="title">Home</div>
                 
               </div>
             </a>
@@ -368,11 +324,11 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Dokumentacja struktury interfejsu użytkownika (UI)</a><ul>
-<li><a class="reference internal" href="#wykorzystane-technologie-i-wzorce-architektoniczne">Wykorzystane technologie i wzorce architektoniczne</a></li>
-<li><a class="reference internal" href="#index-html-glowny-widok-diagram-segre">1. <code class="docutils literal notranslate"><span class="pre">index.html</span></code> - Główny widok (Diagram Segrè)</a></li>
-<li><a class="reference internal" href="#details-html-widok-szczegolow-izotopu-dashboard">2. <code class="docutils literal notranslate"><span class="pre">details.html</span></code> - Widok szczegółów izotopu (Dashboard)</a></li>
-<li><a class="reference internal" href="#style-css-arkusz-stylow">3. <code class="docutils literal notranslate"><span class="pre">style.css</span></code> - Arkusz stylów</a></li>
+<li><a class="reference internal" href="#">Opis projeku, Źródła Danych i Obliczenia Fizyczne</a><ul>
+<li><a class="reference internal" href="#opis-projektu">1. Opis Projektu</a></li>
+<li><a class="reference internal" href="#biblioteka-radioactivedecay-podstawowa-topologia-i-parametry">2. Biblioteka <code class="docutils literal notranslate"><span class="pre">radioactivedecay</span></code> (Podstawowa topologia i parametry)</a></li>
+<li><a class="reference internal" href="#biblioteka-pyne-widma-emisyjne">3. Biblioteka «PyNE (Widma emisyjne)</a></li>
+<li><a class="reference internal" href="#rownania-batemana-ewolucja-czasowa">3. Równania Batemana (Ewolucja czasowa)</a></li>
 </ul>
 </li>
 </ul>
