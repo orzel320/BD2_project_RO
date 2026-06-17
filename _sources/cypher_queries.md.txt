@@ -39,7 +39,7 @@ MATCH (i:Izotop {Z: $z})
 MERGE (p)-[:POSIADA_IZOTOP]->(i)
 ```
 
-## 2. Odpytywanie bazy (Realizacja funkcjonalności API):
+## 2. Odpytywanie bazy (Realizacja funkcjonalności API)
 
 **Pobieranie danych o stabilności do siatki Segrè (routes.py):**
 
