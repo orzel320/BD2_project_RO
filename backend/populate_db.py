@@ -24,7 +24,7 @@ POLSKIE_PIERWIASTKI = {
 try:
     with open(JSON_PATH, "r", encoding="utf-8") as f:
         spectra_db = json.load(f)
-    print(f"Sukces: Pomyślnie wczytano plik widm ({len(spectra_db)} izotopów).")
+    print(f"Sukces: Pomyślnie wczytano plik dla widm ({len(spectra_db)} izotopów).")
 except FileNotFoundError:
     spectra_db = {}
     print(f"Ostrzeżenie: Nie znaleziono pliku pod ścieżką {JSON_PATH}")
@@ -50,11 +50,11 @@ def populate_entire_database():
     """
     driver = GraphDatabase.driver(URI, auth=(USER, PASSWORD))
     all_nuclides = rd.DEFAULTDATA.nuclides
-    print(f"Znaleziono {len(all_nuclides)} izotopów. Rozpoczynam mapowanie...")
+    print(f"Znaleziono {len(all_nuclides)} izotopów do zmapowania.")
     
     with driver.session() as session:
         session.run("MATCH (n) DETACH DELETE n")
-        print("Poprzednie dane zostały usunięte. Buduję czystą topologię...")
+        print("Wyczyszczono poprzednie dane. Dodawane są nowe.")
         
         for current_name in all_nuclides:
             if current_name == 'Stable':
@@ -120,7 +120,7 @@ def populate_entire_database():
             except Exception as e:
                 pass
         
-        print("Łączenie izotopów w struktury Pierwiastków...")
+        print("Łączenie izotopów")
         for z_val, nazwa_pl in POLSKIE_PIERWIASTKI.items():
             session.run("""
                 MERGE (p:Pierwiastek {Z: $z})
@@ -133,4 +133,4 @@ def populate_entire_database():
 
 if __name__ == "__main__":
     populate_entire_database()
-    print("ZAKOŃCZONO! Baza gotowa.")
+    print("Baza gotowa.")
