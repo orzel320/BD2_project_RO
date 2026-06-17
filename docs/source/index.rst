@@ -7,6 +7,7 @@ Oto dokumentacji projektu. Poniżej znajduje się opis architektury interfejsu o
    :maxdepth: 2
    :caption: Architektura:
 
+   project_description.md
    ui_architecture.md
    uml_diagrams.md
    cypher_queries.md
