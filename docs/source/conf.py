@@ -7,7 +7,6 @@ project = 'Radioaktywność - Baza Grafowa'
 copyright = ''
 author = 'Rafał Oszajca'
 
-# 2. Aktywacja wymaganych rozszerzeń
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
